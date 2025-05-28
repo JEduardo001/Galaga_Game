@@ -1,5 +1,5 @@
 class Enemy{
-    constructor(x,y,health,width,height,speed,color){
+    constructor(x,y,health,width,height,speed,color,level,manyHits){
         this.x = x
         this.y = y
         this.health = health
@@ -7,6 +7,8 @@ class Enemy{
         this.height = height
         this.speed = speed
         this.color = color
+        this.level = level
+        this.manyHits = manyHits
     }
 
     moveEnemy(){

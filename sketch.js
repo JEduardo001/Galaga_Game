@@ -6,6 +6,7 @@ let pauseGame = false
 let naveEnemyL1
 let naveEnemyL2
 let naveEnemyL3
+let nave3Health
 let boss
 let playerImage
 let bulletsPlayer = []
@@ -32,10 +33,10 @@ function setup() {
     naveEnemyL1 = loadImage('ship.png'); 
     naveEnemyL2 = loadImage('ship2.png'); 
     naveEnemyL3 = loadImage('ship3.png'); 
-
+    nave3Health = loadImage('ship4.png')
     playerImage = loadImage('player.png')
     fondo = loadImage('fondo.jpg')
-    player = new Player(100,400,1,50,50,5,'white',0)
+    player = new Player(100,400,1000,50,50,5,'white',0)
 
     for(let i = 0;i<40; i++){
         asteroids[i] = new Asteroid(randomNumber(0,800),-5,3,3,randomNumber(1,4),'white')
@@ -83,10 +84,22 @@ function draw() {
                         shotShipEnemy(enemies[i])       
                     }
                 }
-            }
-            
+            }   
         }
-        image(naveEnemyL1, enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height); 
+        if(enemies[i].manyHits == 3){
+            image(nave3Health, enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height); 
+        }else{
+            if(enemies[i].level == 1){
+                image(naveEnemyL1, enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height); 
+            }
+            if(enemies[i].level == 2){
+                image(naveEnemyL2, enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height); 
+            }
+            if(enemies[i].level == 3){
+                image(naveEnemyL3, enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height); 
+            }
+        }
+       
     }
 
     //bullets enemy
@@ -221,6 +234,7 @@ function validateCollision(obj1,typeCollision){
                                         gameWin = true
                                     }else{
                                         loadVariablesToNextLevel()
+                                        initLevel()
                                         inicializedEnemies()
                                     }
                                     
@@ -345,6 +359,7 @@ function getDirection(direction){
 
 function resetGame(){
     player = new Player(100,400,5,50,50,5,'white',0)
+    score = 0
     gameWin = false
     bulletsEnemy = []
     level = 1
@@ -358,20 +373,32 @@ function resetGame(){
    
 }
 
-function inicializedEnemies(){
-    let speed
-    if(level == 1){
-        speed = 1
-    }
+function initLevel(){
     if(level == 2){
-        speed = 3
+        enemies.push(new Enemy(randomNumber(20,760),-5,3,50,50,1,'white',level,3))
+        cantEnemiesWithLife = 1
+        cantEnemiesGenerated = 1
     }
     if(level == 3){
-        speed = 4
+        enemies.push(new Enemy(randomNumber(20,760),-5,3,50,50,3,'white',level,3))
+        enemies.push(new Enemy(randomNumber(20,760),-5,3,50,50,3,'white',level,3))
+        cantEnemiesWithLife = 2
+        cantEnemiesGenerated = 2
+
     }
+}
+
+function inicializedEnemies(){
+    let speed = 1
+    let health = 1
+    if(level == 3){
+        speed = 3
+        health = 1
+    }
+    
 
     while(cantEnemiesWithLife < cantEnemiesToGenerate){
-        enemies.push(new Enemy(randomNumber(20,760),-5,5,50,50,speed,'white'))
+        enemies.push(new Enemy(randomNumber(20,760),-5,1,50,50,speed,'white',level,1))
         cantEnemiesWithLife++
         cantEnemiesGenerated++
     }
@@ -417,7 +444,7 @@ function keyPressed() {
 
 function shotShipEnemy(enemy){
     if(bulletsEnemy.length == 0 || bulletsEnemy.length < 50){
-        bulletsEnemy.push(new Bullet(enemy.x,enemy.y,5,5,12,randomNumber(3,7),'red'))
+        bulletsEnemy.push(new Bullet(enemy.x,enemy.y,5,5,12,randomNumber(4,7),'red'))
     }else{
         for(var i2 = 0;i2<bulletsEnemy.length;i2++){
             if(bulletsEnemy[i2].y >= 600){
