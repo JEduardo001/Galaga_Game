@@ -13,14 +13,28 @@ class Asteroid{
         this.y += this.speed
     }
 
-    genNewCoords(){
+    genNewCoords(level){
         this.x = randomNumber(0,800)
         this.y = randomNumber(-3,-13)
-        this.speed = randomNumber(1,4)
+        if(level == 3){
+            this.speed = randomNumber(8,14)
+
+        }else{
+            this.speed = randomNumber(1,4)
+
+        }
     }
 
     randomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    changeColor(level){
+        if(level == 3){
+            this.color = 'orange'
+        }else{
+            this.color = 'white'
+        }
     }
       
 }
