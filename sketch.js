@@ -92,7 +92,7 @@ function setup() {
 }
   
 function startGame(){
-    player = new Player(100,400,3,50,50,5,'white',0)
+    player = new Player(100,500,3,50,50,5,'white',0)
     showTransitionToNextLevel = true
     setTimeout(inicializedEnemies, 3000);
 
@@ -502,7 +502,7 @@ function getDirection(direction){
 
 
 function resetGame(){
-    player = new Player(100,400,3,50,50,5,'white',0)
+    player = new Player(100,500,3,50,50,5,'white',0)
     score = 0
     gameWin = false
     bulletsEnemy = []
@@ -520,7 +520,7 @@ function resetGame(){
 
 function initLevel(){
     if(level == 2){
-        enemies.push(new Enemy(randomNumber(20,760),-5,3,50,50,1,'white',level,3,0,false))
+        enemies.push(new Enemy(randomNumber(20,760),-5,3,50,50,1,'white',level,3,randomNumber(2,3),false))
         cantEnemiesWithLife = 1
         cantEnemiesGenerated = 1
     }
@@ -613,12 +613,12 @@ function keyPressed() {
         if (keyCode === RIGHT_ARROW) {
             player.direction = 1
         }
-        if(keyCode === UP_ARROW) {
+       /*  if(keyCode === UP_ARROW) {
             player.direction = 2
           }
         if(keyCode === DOWN_ARROW) {
             player.direction = 3
-        }
+        } */
         if(keyCode === 32) {
             player.shot(bulletsPlayer)
             soundShotPlayer.play()
@@ -725,12 +725,12 @@ function showControls(textCenter){
     textAlign(CENTER, CENTER)
     text('Controles', widthText / 2, height / 2 - 10)
     textSize(22)
-    text('Arriba: flecha arriba', widthText / 2, height / 2 + 40)
-    text('Abajo: flecha abajo', widthText / 2, height / 2 + 80)
-    text('Derecha: flecha derecha', widthText / 2, height / 2 + 120)
-    text('Izquierda flecha izquierda', widthText / 2, height / 2 + 160)
-    text('Pausa: tecla P', widthText / 2, height / 2 + 190)
-    text('Disparo: tecla space', widthText / 2, height / 2 + 230)
+    //text('Arriba: flecha arriba', widthText / 2, height / 2 + 40)
+    //text('Abajo: flecha abajo', widthText / 2, height / 2 + 80)
+    text('Derecha: flecha derecha', widthText / 2, height / 2 + 40)
+    text('Izquierda flecha izquierda', widthText / 2, height / 2 + 80)
+    text('Pausa: tecla P', widthText / 2, height / 2 + 120)
+    text('Disparo: tecla space', widthText / 2, height / 2 + 150)
 
 }
 

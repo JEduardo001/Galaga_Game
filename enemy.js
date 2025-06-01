@@ -18,13 +18,32 @@ class Enemy{
             this.y += this.speed
         }
         if(this.level == 2){
+            if(this.randomNumber(0,70) == 3){
+                if(this.direction == 2){
+                    this.direction = 3
+                }else{
+                    this.direction = 2
+
+                }
+                this.y += this.height * 0.25
+
+            }
+            if(this.direction == 2){
+                this.x += this.speed
+            }else{
+                this.x -= this.speed
+            }
             if(this.x > 800){
                 this.x = -30
-                this.y += this.height
-            }else{
-                this.x += this.speed
+                this.y += this.height * 0.25
             }
+            if(this.x < -30){
+                this.x = 800
+                this.y += this.height * 0.25
+            }                
         }
+            
+            
         if(this.level == 3){
             if(randomNumber(0,15) == 3){
                 this.direction = randomNumber(0,7)
